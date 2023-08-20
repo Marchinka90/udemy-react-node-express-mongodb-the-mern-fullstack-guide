@@ -18,7 +18,7 @@ export const DUMMY_PLACES = [
     },
     {
         id: 'p2',
-        title: 'Empire State Bulding',
+        title: 'Emp Stateeeeee Buldingggggg',
         description: 'One of the most famous scy scrapers in the world!',
         imageURL: 'https://lh3.googleusercontent.com/p/AF1QipOBBZgukGcL1DRhiwcJhYG_2o-1pPv5Wvs2M29B=s680-w680-h510',
         address: '20 W 34th St., New York, NY 10001',
