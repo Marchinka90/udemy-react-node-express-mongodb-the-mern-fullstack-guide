@@ -21,7 +21,7 @@ let DUMMY_PLACES = [
         description: 'One of the most famous scy scrapers in the world!',
         imageURL: 'https://lh3.googleusercontent.com/p/AF1QipOBBZgukGcL1DRhiwcJhYG_2o-1pPv5Wvs2M29B=s680-w680-h510',
         address: '20 W 34th St., New York, NY 10001',
-        creator: 'u2',
+        creator: 'u1',
         location: {
             lat: 40.748351,
             lng: -73.985885
@@ -40,11 +40,11 @@ const getPlaceById = (req, res, next) => {
     res.json({place: place});
 }
 
-const getPlaceByUserId = (req, res, next) => {
+const getPlacesByUserId = (req, res, next) => {
     const userId = req.params.uid;
-    const place = DUMMY_PLACES.find(p => p.creator  === userId);
+    const place = DUMMY_PLACES.filter(p => p.creator === userId);
 
-    if (!place) {
+    if (!place || place.length === 0) {
         return next(new HttpError('Could not find a place for the provided user id.', 404));
     } 
 
@@ -89,7 +89,7 @@ const deletePlace =  (req, res, next) => {
 };
 
 exports.getPlaceById = getPlaceById;
-exports.getPlaceByUserId = getPlaceByUserId;
+exports.getPlacesByUserId = getPlacesByUserId;
 exports.createPlace = createPlace;
 exports.updatePlace = updatePlace;
 exports.deletePlace = deletePlace;
