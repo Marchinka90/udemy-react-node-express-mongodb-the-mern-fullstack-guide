@@ -66,7 +66,7 @@ const createPlace = async (req, res, next) => {
         return next(new HttpError('Creating place failed, pleace try again.', 500));
     }
 
-    res.status(201).json({ place: createdPlace});
+    res.status(201).json({ place: createdPlace.toObject( {getters: true} )});
 }
 
 const updatePlace = async (req, res, next) => {
