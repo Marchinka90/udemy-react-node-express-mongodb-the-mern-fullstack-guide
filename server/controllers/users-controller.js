@@ -20,7 +20,7 @@ const signup = async (req, res, next) => {
         return next(new HttpError('Invalid inputs passed, please check your data.', 422));
     }
     
-    const { name, email, password, places } = req.body; 
+    const { name, email, password } = req.body; 
 
     let existingUser; 
     try {
@@ -38,7 +38,7 @@ const signup = async (req, res, next) => {
         email,
         password,
         image: 'https://live.staticflickr.com/7631/26849088292_36fc52ee90_b.jpg',
-        places
+        places: []
     });
 
     try {
@@ -46,7 +46,6 @@ const signup = async (req, res, next) => {
     } catch {
         return next(new HttpError('Signing up faild, please try again later.', 500));
     }
-
 
     res.status(201).json({user: createdUser.toObject( {getters: true} )});
 }
