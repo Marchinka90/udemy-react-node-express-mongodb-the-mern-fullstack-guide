@@ -1,18 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import UsersList from '../components/UsersList';
+import ErrorModal from '../../shared/components/UIElements/ErrorModal';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
+import { useHttpClient } from '../../shared/hooks/http-hook';
 
 const Users = () => {
-    const USERS = [
-        {
-            id: 'u1',
-            image: 'https://www.bemytravelmuse.com/wp-content/uploads/2016/01/DSC03000-1.jpg',
-            name: 'Max',
-            places: 1
-        }
-    ]
+    const [loadedUsers, setLoadedUsers] = useState();
+    const {isLoading, error, sendRequest, clearError} = useHttpClient();
+
+    useEffect(() => {
+        sendRequest('http://localhost:5000/api/users')
+        .then((responseData) => setLoadedUsers(responseData.users));        
+    }, [sendRequest]);
+
     return (
-        <UsersList items={USERS} />
+        <React.Fragment>
+            <ErrorModal error={error} onClear={clearError} />
+            {isLoading && (
+                <div className='center'>
+                    <LoadingSpinner />
+                </div>
+            )}
+            {!isLoading && loadedUsers && <UsersList items={loadedUsers} />}
+        </React.Fragment>
     );
 }
 
