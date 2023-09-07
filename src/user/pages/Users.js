@@ -11,7 +11,8 @@ const Users = () => {
 
     useEffect(() => {
         sendRequest('http://localhost:5000/api/users')
-        .then((responseData) => setLoadedUsers(responseData.users));        
+            .then((responseData) => setLoadedUsers(responseData.users))
+            .catch((err) => {});        
     }, [sendRequest]);
 
     return (

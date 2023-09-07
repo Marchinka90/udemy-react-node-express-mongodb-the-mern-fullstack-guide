@@ -1,39 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'
 
 import PlaceList from '../components/PlaceList';
-
-export const DUMMY_PLACES = [
-    {
-        id: 'p1',
-        title: 'Empire State Bulding',
-        description: 'One of the most famous scy scrapers in the world!',
-        imageURL: 'https://lh3.googleusercontent.com/p/AF1QipOBBZgukGcL1DRhiwcJhYG_2o-1pPv5Wvs2M29B=s680-w680-h510',
-        address: '20 W 34th St., New York, NY 10001',
-        creator: 'u1',
-        location: {
-            lat: 40.748351,
-            lng: -73.985885
-        }
-    },
-    {
-        id: 'p2',
-        title: 'Emp Stateeeeee Buldingggggg',
-        description: 'One of the most famous scy scrapers in the world!',
-        imageURL: 'https://lh3.googleusercontent.com/p/AF1QipOBBZgukGcL1DRhiwcJhYG_2o-1pPv5Wvs2M29B=s680-w680-h510',
-        address: '20 W 34th St., New York, NY 10001',
-        creator: 'u2',
-        location: {
-            lat: 40.748351,
-            lng: -73.985885
-        }
-    }
-]
+import { useHttpClient } from '../../shared/hooks/http-hook';
+import ErrorModal from '../../shared/components/UIElements/ErrorModal';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 
 const UserPlaces = props => {
+    const [loadedPlaces, setLoadedPlaces] = useState();
+    const {isLoading, error, sendRequest, clearError} = useHttpClient();
+
     const userId = useParams().userId;
-    const loadedPlaces = DUMMY_PLACES.filter(place => place.creator === userId);
-    return <PlaceList items={loadedPlaces}/>;
+
+    useEffect(() => {
+        sendRequest(`http://localhost:5000/api/places/user/${userId}`)
+            .then((resData) => setLoadedPlaces(resData.places))
+            .catch((err) => {});
+    }, [sendRequest, userId]);
+
+    const placeDeleteHandler = (deletedPlaceId) => {
+        setLoadedPlaces(prevPlaces => 
+            prevPlaces.filter(place => place.id !== deletedPlaceId)
+        );
+    };
+    
+    return (
+        <React.Fragment>
+            <ErrorModal error={error} onClear={clearError} />
+            {isLoading && (
+                <div className='center'>
+                    <LoadingSpinner />
+                </div>
+            )}
+            {!isLoading && loadedPlaces && <PlaceList items={loadedPlaces} onDeletePlace={placeDeleteHandler} />}
+        </React.Fragment>
+    );
 };
 
 export default UserPlaces;
