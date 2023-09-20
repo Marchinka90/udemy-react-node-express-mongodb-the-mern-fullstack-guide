@@ -24,3 +24,6 @@ yarn-debug.log*
 yarn-error.log*
 
 keys.json
+
+# image files
+server/uploads/images
