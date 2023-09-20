@@ -50,7 +50,9 @@ const NewPlace = () => {
         formData.append('creator', authCtx.userId);
         formData.append('image', formState.inputs.image.value);
 
-        sendRequest('http://localhost:5000/api/places', 'POST', formData)
+        sendRequest('http://localhost:5000/api/places', 'POST', formData, {
+            'Authorization': 'Bearer ' + authCtx.token
+        })
             .then(() => history.push('/'))
             .catch((err) => {});
     }

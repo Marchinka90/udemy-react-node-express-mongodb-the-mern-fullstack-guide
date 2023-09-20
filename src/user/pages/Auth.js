@@ -69,7 +69,7 @@ const Auth = () => {
                     'Content-Type': 'application/json'
                 }
             )
-            .then((resData) =>authCtx.login(resData.user.id))
+            .then((resData) => authCtx.login(resData.userId, resData.token))
             .catch((err) => {});
         } else {
             const formData = new FormData();
@@ -79,7 +79,7 @@ const Auth = () => {
             formData.append('image', formState.inputs.image.value);
 
             sendRequest('http://localhost:5000/api/users/signup', 'POST', formData)
-            .then((resData) =>authCtx.login(resData.user.id))
+            .then((resData) => authCtx.login(resData.userId, resData.token))
             .catch((err) => {});
         } 
     };

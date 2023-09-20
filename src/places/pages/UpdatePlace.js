@@ -86,7 +86,8 @@ const UpdatePlace = (props) => {
                 description: formState.inputs.description.value,
             }),
             {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + authCtx.token
             }
         )
         .then(() => history.push(`/${authCtx.userId}/places`))
