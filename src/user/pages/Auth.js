@@ -61,7 +61,7 @@ const Auth = () => {
         event.preventDefault();
         
         if (isLoginMode) {
-            sendRequest('http://localhost:5000/api/users/login', 'POST', JSON.stringify({
+            sendRequest(`${process.env.REACT_APP_BACKEND_URL}/users/login`, 'POST', JSON.stringify({
                     email: formState.inputs.email.value,
                     password: formState.inputs.password.value
                 }),
@@ -78,7 +78,7 @@ const Auth = () => {
             formData.append('password', formState.inputs.password.value);
             formData.append('image', formState.inputs.image.value);
 
-            sendRequest('http://localhost:5000/api/users/signup', 'POST', formData)
+            sendRequest(`${process.env.REACT_APP_BACKEND_URL}/users/signup`, 'POST', formData)
             .then((resData) => authCtx.login(resData.userId, resData.token))
             .catch((err) => {});
         } 

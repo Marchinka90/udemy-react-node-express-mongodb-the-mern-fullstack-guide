@@ -40,7 +40,7 @@ const UpdatePlace = (props) => {
     const history = useHistory();
 
     useEffect(() => {
-        sendRequest(`http://localhost:5000/api/places/${placeId}`)
+        sendRequest(`${process.env.REACT_APP_BACKEND_URL}/places/${placeId}`)
             .then((resData) => {
                 setLoadedPlace(resData.place);
                 setFormData({
@@ -81,7 +81,7 @@ const UpdatePlace = (props) => {
 
     const placeUpdateSubmitHandler = (event) => {
         event.preventDefault();
-        sendRequest(`http://localhost:5000/api/places/${placeId}`, 'PATCH', JSON.stringify({
+        sendRequest(`${process.env.REACT_APP_BACKEND_URL}/places/${placeId}`, 'PATCH', JSON.stringify({
                 title: formState.inputs.title.value,
                 description: formState.inputs.description.value,
             }),

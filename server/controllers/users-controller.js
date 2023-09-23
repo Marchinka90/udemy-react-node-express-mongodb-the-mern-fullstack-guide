@@ -60,7 +60,7 @@ const signup = async (req, res, next) => {
     try {
         token = jwt.sign(
             { userId: createdUser.id, email: createdUser.email}, 
-            'supersecret_dont_share', 
+            process.env.JWT_KEY, 
             {expiresIn: '1h'}
         );
     } catch {
@@ -71,6 +71,7 @@ const signup = async (req, res, next) => {
 }
 
 const login = async (req, res, next) => {
+    console.log(req.body)
     const { email, password } = req.body;
 
     let existingUser; 
@@ -97,9 +98,12 @@ const login = async (req, res, next) => {
 
     let token;
     try {
+        console.log(process.env.DB_NAME);
+        console.log(process.env.JWT_KEY);
+        console.log(process.env.GOOGLE_API_KEY);
         token = jwt.sign(
             { userId: existingUser.id, email: existingUser.email}, 
-            'supersecret_dont_share', 
+            process.env.JWT_KEY, 
             {expiresIn: '1h'}
         );
     } catch {

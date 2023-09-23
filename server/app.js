@@ -43,7 +43,7 @@ app.use((error, req, res, next) => {
     res.json({ message: error.message || 'An unknown error occurred!' });
 });
 
-mongoose.connect('mongodb://localhost:27017/mern-places')
+mongoose.connect(`mongodb://localhost:27017/${process.env.DB_NAME}`)
     .then(() => {
         app.listen(5000);
     })

@@ -13,7 +13,7 @@ const UserPlaces = props => {
     const userId = useParams().userId;
 
     useEffect(() => {
-        sendRequest(`http://localhost:5000/api/places/user/${userId}`)
+        sendRequest(`${process.env.REACT_APP_BACKEND_URL}/places/user/${userId}`)
             .then((resData) => setLoadedPlaces(resData.places))
             .catch((err) => {});
     }, [sendRequest, userId]);
